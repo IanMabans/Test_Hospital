@@ -39,7 +39,7 @@ class LoginScreenState extends State<LoginScreen> {
                     padding: EdgeInsets.only(
                         bottom: MediaQuery.of(context).viewInsets.bottom),
                     child: SizedBox(
-                        height: MediaQuery.of(context).size.height,
+                        height: SizeUtils.height,
                         child: Form(
                             key: _formKey,
                             child: Container(
