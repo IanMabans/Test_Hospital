@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:utibu/core/utils/validation_functions.dart';
 import 'package:utibu/widgets/custom_text_form_field.dart';
 import 'package:utibu/widgets/custom_elevated_button.dart';
@@ -30,127 +33,125 @@ class LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-            backgroundColor: appTheme.cyan300,
-            resizeToAvoidBottomInset: false,
-            body: SizedBox(
-                width: SizeUtils.width,
-                child: SingleChildScrollView(
-                    padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom),
-                    child: SizedBox(
-                        height: SizeUtils.height,
-                        child: Form(
-                            key: _formKey,
-                            child: Container(
-                                width: double.maxFinite,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 20.h, vertical: 35.v),
-                                child: Column(children: [
-                                  SizedBox(height: 70.v),
-                                  _buildPageTitle(context),
-                                  SizedBox(height: 32.v),
-                                  Selector<LoginProvider,
-                                          TextEditingController?>(
-                                      selector: (context, provider) =>
-                                          provider.emailController,
-                                      builder:
-                                          (context, emailController, child) {
-                                        return CustomTextFormField(
-                                            controller: emailController,
-                                            hintText: "lbl_your_email".tr,
-                                            textInputType:
-                                                TextInputType.emailAddress,
-                                            prefix: Container(
-                                                margin: EdgeInsets.fromLTRB(
-                                                    16.h, 12.v, 10.h, 12.v),
-                                                child: CustomImageView(
-                                                    imagePath: ImageConstant
-                                                        .imgSystemIcon,
-                                                    height: 24.adaptSize,
-                                                    width: 24.adaptSize)),
-                                            prefixConstraints:
-                                                BoxConstraints(maxHeight: 48.v),
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  (!isValidEmail(value,
-                                                      isRequired: true))) {
-                                                return "err_msg_please_enter_valid_email"
-                                                    .tr;
-                                              }
-                                              return null;
-                                            });
-                                      }),
-                                  SizedBox(height: 8.v),
-                                  Selector<LoginProvider,
-                                          TextEditingController?>(
-                                      selector: (context, provider) =>
-                                          provider.passwordController,
-                                      builder:
-                                          (context, passwordController, child) {
-                                        return CustomTextFormField(
-                                            controller: passwordController,
-                                            hintText: "lbl_password".tr,
-                                            textInputAction:
-                                                TextInputAction.done,
-                                            textInputType:
-                                                TextInputType.visiblePassword,
-                                            prefix: Container(
-                                                margin: EdgeInsets.fromLTRB(
-                                                    16.h, 12.v, 10.h, 12.v),
-                                                child: CustomImageView(
-                                                    imagePath: ImageConstant
-                                                        .imgLocation,
-                                                    height: 24.adaptSize,
-                                                    width: 24.adaptSize)),
-                                            prefixConstraints:
-                                                BoxConstraints(maxHeight: 48.v),
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  (!isValidPassword(value,
-                                                      isRequired: true))) {
-                                                return "err_msg_please_enter_valid_password"
-                                                    .tr;
-                                              }
-                                              return null;
-                                            },
-                                            obscureText: true);
-                                      }),
-                                  SizedBox(height: 27.v),
-                                  CustomElevatedButton(
-                                      text: "lbl_sign_in".tr,
-                                      buttonStyle:
-                                          CustomButtonStyles.fillPrimary,
-                                      buttonTextStyle:
-                                          CustomTextStyles.titleSmallTeal300,
-                                      onPressed: () {
-                                        onTapSignIn(context);
-                                      }),
-                                  SizedBox(height: 24.v),
-                                  Text("msg_forgot_password".tr,
-                                      style: CustomTextStyles
-                                          .labelLargePrimaryBold),
-                                  Spacer(),
-                                  GestureDetector(
-                                      onTap: () {
-                                        onTapTxtDonthaveanaccount(context);
-                                      },
-                                      child: RichText(
-                                          text: TextSpan(children: [
-                                            TextSpan(
-                                                text:
-                                                    "msg_don_t_have_an_account2"
-                                                        .tr,
-                                                style: CustomTextStyles
-                                                    .bodySmallffffffff),
-                                            TextSpan(text: " "),
-                                            TextSpan(
-                                                text: "lbl_register".tr,
-                                                style: CustomTextStyles
-                                                    .labelLargeffffffff)
-                                          ]),
-                                          textAlign: TextAlign.left))
-                                ]))))))));
+      child: Scaffold(
+        backgroundColor: appTheme.cyan300,
+        resizeToAvoidBottomInset: false,
+        body: SizedBox(
+          width: SizeUtils.width,
+          child: SingleChildScrollView(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: SizedBox(
+              height: SizeUtils.height,
+              child: Form(
+                key: _formKey,
+                child: Container(
+                  width: double.maxFinite,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 20.h, vertical: 35.v),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 70.v),
+                      _buildPageTitle(context),
+                      SizedBox(height: 32.v),
+                      Selector<LoginProvider, TextEditingController>(
+                        selector: (context, provider) =>
+                            provider.emailController,
+                        builder: (context, emailController, child) {
+                          // Note: No need to pass emailController as an argument to CustomTextFormField now
+                          return CustomTextFormField(
+                            controller: emailController,
+                            hintText: "lbl_your_email".tr,
+                            textInputType: TextInputType.emailAddress,
+                            prefix: Container(
+                              margin:
+                                  EdgeInsets.fromLTRB(16.h, 12.v, 10.h, 12.v),
+                              child: CustomImageView(
+                                imagePath: ImageConstant.imgSystemIcon,
+                                height: 24.adaptSize,
+                                width: 24.adaptSize,
+                              ),
+                            ),
+                            prefixConstraints: BoxConstraints(maxHeight: 48.v),
+                            validator: (value) {
+                              if (value == null ||
+                                  !isValidEmail(value, isRequired: true)) {
+                                return "err_msg_please_enter_valid_email".tr;
+                              }
+                              return null;
+                            },
+                          );
+                        },
+                      ),
+                      SizedBox(height: 8.v),
+                      Selector<LoginProvider, TextEditingController?>(
+                          selector: (context, provider) =>
+                              provider.passwordController,
+                          builder: (context, passwordController, child) {
+                            return CustomTextFormField(
+                                controller: passwordController,
+                                hintText: "lbl_password".tr,
+                                textInputAction: TextInputAction.done,
+                                textInputType: TextInputType.visiblePassword,
+                                prefix: Container(
+                                    margin: EdgeInsets.fromLTRB(
+                                        16.h, 12.v, 10.h, 12.v),
+                                    child: CustomImageView(
+                                        imagePath: ImageConstant.imgLocation,
+                                        height: 24.adaptSize,
+                                        width: 24.adaptSize)),
+                                prefixConstraints:
+                                    BoxConstraints(maxHeight: 48.v),
+                                validator: (value) {
+                                  if (value == null ||
+                                      (!isValidPassword(value,
+                                          isRequired: true))) {
+                                    return "err_msg_please_enter_valid_password"
+                                        .tr;
+                                  }
+                                  return null;
+                                },
+                                obscureText: true);
+                          }),
+                      SizedBox(height: 27.v),
+                      CustomElevatedButton(
+                          text: "lbl_sign_in".tr,
+                          buttonStyle: CustomButtonStyles.fillPrimary,
+                          buttonTextStyle: CustomTextStyles.titleSmallTeal300,
+                          onPressed: () {
+                            onTapSignIn(context);
+                          }),
+                      SizedBox(height: 24.v),
+                      Text("msg_forgot_password".tr,
+                          style: CustomTextStyles.labelLargePrimaryBold),
+                      Spacer(),
+                      GestureDetector(
+                        onTap: () {
+                          onTapTxtDonthaveanaccount(context);
+                        },
+                        child: RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                    text: "msg_don_t_have_an_account2".tr,
+                                    style: CustomTextStyles.bodySmallffffffff),
+                                TextSpan(text: " "),
+                                TextSpan(
+                                    text: "lbl_register".tr,
+                                    style: CustomTextStyles.labelLargeffffffff)
+                              ],
+                            ),
+                            textAlign: TextAlign.left),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   /// Section Widget
@@ -168,11 +169,32 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   /// Navigates to the signupScreen when the action is triggered.
-  onTapSignIn(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.signupScreen,
-    );
+  onTapSignIn(BuildContext context) async {
+    final form = _formKey.currentState;
+    if (form!.validate()) {
+      final provider = Provider.of<LoginProvider>(context, listen: false);
+      String email = provider.emailController.text.trim();
+      String password = provider.passwordController.text.trim();
+      try {
+        final credential =
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+
+        if (credential.user != null) {
+          NavigatorService.pushNamed(AppRoutes.dashboardContainerScreen);
+        } else {
+          print("Login failed: User not found or invalid credentials.");
+        }
+      } on FirebaseAuthException catch (e) {
+        print("Firebase Authentication Error: ${e.message}");
+      } catch (e) {
+        print("Error: $e");
+      }
+    }
   }
+
 
   /// Navigates to the signupScreen when the action is triggered.
   onTapTxtDonthaveanaccount(BuildContext context) {
