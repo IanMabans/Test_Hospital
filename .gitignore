@@ -8,3 +8,4 @@
 /pubspec.lock
 .git.zip
 .git
+/android/app/google-services.json
