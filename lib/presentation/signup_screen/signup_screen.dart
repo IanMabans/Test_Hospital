@@ -276,7 +276,7 @@ class SignupScreenState extends State<SignupScreen> {
         _isLoading = false;
       });
       Navigator.pushReplacementNamed(
-          context, AppRoutes.dashboardContainerScreen);
+          context, AppRoutes.pharmacyScreen);
     } catch (e) {
       // Handle sign up errors
       print('Sign up error: $e');

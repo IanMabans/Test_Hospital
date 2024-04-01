@@ -1,7 +1,8 @@
-import '../models/drugs_item_model.dart';
-import 'package:utibu/widgets/custom_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:utibu/core/app_export.dart';
+
+import '../../../widgets/custom_icon_button.dart';
+import '../models/drugs_item_model.dart';
 
 // ignore: must_be_immutable
 class DrugsItemWidget extends StatelessWidget {

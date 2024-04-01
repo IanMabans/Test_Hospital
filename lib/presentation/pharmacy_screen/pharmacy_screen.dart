@@ -4,6 +4,7 @@ import 'package:utibu/widgets/app_bar/appbar_subtitle.dart';
 import 'package:utibu/widgets/app_bar/appbar_trailing_image.dart';
 import 'package:utibu/widgets/custom_search_view.dart';
 import 'package:utibu/widgets/custom_elevated_button.dart';
+import '../cart_screen/models/drugslist_item_model.dart';
 import 'widgets/drugs_item_widget.dart';
 import 'models/drugs_item_model.dart';
 import 'models/pharmacy_model.dart';
@@ -126,50 +127,76 @@ class PharmacyScreenState extends State<PharmacyScreen> {
   }
 
   /// Section Widget
+  /// Section Widget
   Widget _buildDrugs(BuildContext context) {
     return Align(
-        alignment: Alignment.centerRight,
-        child: SizedBox(
-            height: 165.v,
-            child:
-                Consumer<PharmacyProvider>(builder: (context, provider, child) {
-              return ListView.separated(
-                  padding: EdgeInsets.only(left: 21.h),
-                  scrollDirection: Axis.horizontal,
-                  separatorBuilder: (context, index) {
-                    return SizedBox(width: 21.h);
+      alignment: Alignment.centerRight,
+      child: SizedBox(
+        height: 165.v,
+        child: Consumer<PharmacyProvider>(
+          builder: (context, provider, child) {
+            return ListView.separated(
+              padding: EdgeInsets.only(left: 21.h),
+              scrollDirection: Axis.horizontal,
+              separatorBuilder: (context, index) {
+                return SizedBox(width: 18.h);
+              },
+              itemCount: provider.pharmacyModelObj.drugs1ItemList.length,
+              itemBuilder: (context, index) {
+                Drugs1ItemModel model = provider.pharmacyModelObj.drugs1ItemList[index]; // <-- Change made here
+                return GestureDetector(
+                  onTap: () {
+                    NavigatorService.pushNamed(
+                      AppRoutes.drugDetailsScreen,
+                      arguments: model, // Pass the selected item model to DrugDetailsScreen
+                    );
                   },
-                  itemCount: provider.pharmacyModelObj.drugsItemList.length,
-                  itemBuilder: (context, index) {
-                    DrugsItemModel model =
-                        provider.pharmacyModelObj.drugsItemList[index];
-                    return DrugsItemWidget(model);
-                  });
-            })));
+                  child: Drugs1ItemWidget(model), // Assuming you have a Drugs1ItemWidget
+                );
+              },
+            );
+          },
+        ),
+      ),
+    );
   }
 
-  /// Section Widget
+
   Widget _buildDrugs1(BuildContext context) {
     return Align(
-        alignment: Alignment.centerRight,
-        child: SizedBox(
-            height: 165.v,
-            child:
-                Consumer<PharmacyProvider>(builder: (context, provider, child) {
-              return ListView.separated(
-                  padding: EdgeInsets.only(left: 21.h),
-                  scrollDirection: Axis.horizontal,
-                  separatorBuilder: (context, index) {
-                    return SizedBox(width: 18.h);
+      alignment: Alignment.centerRight,
+      child: SizedBox(
+        height: 165.v,
+        child: Consumer<PharmacyProvider>(
+          builder: (context, provider, child) {
+            return ListView.separated(
+              padding: EdgeInsets.only(left: 21.h),
+              scrollDirection: Axis.horizontal,
+              separatorBuilder: (context, index) {
+                return SizedBox(width: 18.h);
+              },
+              itemCount: provider.pharmacyModelObj.drugs1ItemList.length,
+              itemBuilder: (context, index) {
+                Drugs1ItemModel model = provider.pharmacyModelObj.drugs1ItemList[index]; // <-- Change made here
+                return GestureDetector(
+                  onTap: () {
+                    NavigatorService.pushNamed(
+                      AppRoutes.drugDetailsScreen,
+                      arguments: model, // Pass the selected item model to DrugDetailsScreen
+                    );
                   },
-                  itemCount: provider.pharmacyModelObj.drugs1ItemList.length,
-                  itemBuilder: (context, index) {
-                    Drugs1ItemModel model =
-                        provider.pharmacyModelObj.drugs1ItemList[index];
-                    return Drugs1ItemWidget(model);
-                  });
-            })));
+                  child: Drugs1ItemWidget(model), // Assuming you have a Drugs1ItemWidget
+                );
+              },
+            );
+          },
+        ),
+      ),
+    );
   }
+
+
+
 
   /// Common widget
   Widget _buildProductOnSale(

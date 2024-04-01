@@ -160,7 +160,7 @@ class LoginScreenState extends State<LoginScreen> {
       CustomImageView(
           imagePath: ImageConstant.imgHiDocLogo42x115, height: 42.v),
       SizedBox(height: 26.v),
-      Text("msg_welcome_to_hidoc".tr,
+      Text("msg_welcome_to_utibu".tr,
           style: CustomTextStyles.titleMediumOnPrimaryContainer),
       SizedBox(height: 12.v),
       Text("msg_sign_in_to_continue".tr,
@@ -183,7 +183,7 @@ class LoginScreenState extends State<LoginScreen> {
         );
 
         if (credential.user != null) {
-          NavigatorService.pushNamed(AppRoutes.dashboardContainerScreen);
+          NavigatorService.pushNamed(AppRoutes.pharmacyScreen);
         } else {
           print("Login failed: User not found or invalid credentials.");
         }

@@ -9,7 +9,8 @@ import '../models/drug_details_model.dart';
 
 // ignore_for_file: must_be_immutable
 class DrugDetailsProvider extends ChangeNotifier {
-  DrugDetailsModel drugDetailsModelObj = DrugDetailsModel();
+  DrugDetailsModel drugDetailsModelObj = DrugDetailsModel(
+      imagePath: '', drugName: '', drugQuantity: '', drugDescription: '');
 
   @override
   void dispose() {

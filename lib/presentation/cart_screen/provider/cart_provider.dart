@@ -11,6 +11,14 @@ import '../models/drugslist_item_model.dart';
 // ignore_for_file: must_be_immutable
 class CartProvider extends ChangeNotifier {
   CartModel cartModelObj = CartModel();
+  List<DrugslistItemModel> _cartItems = [];
+
+  List<DrugslistItemModel> get cartItems => _cartItems;
+
+  void addToCart(DrugslistItemModel item) {
+    _cartItems.add(item);
+    notifyListeners();
+  }
 
   @override
   void dispose() {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../presentation/drug_details_screen/models/drug_details_model.dart';
 import '../presentation/splash_screen/splash_screen.dart';
 import '../presentation/login_screen/login_screen.dart';
 import '../presentation/signup_screen/signup_screen.dart';
@@ -58,20 +59,23 @@ class AppRoutes {
   static const String initialRoute = '/initialRoute';
 
   static Map<String, WidgetBuilder> get routes => {
-        splashScreen: SplashScreen.builder,
-        loginScreen: LoginScreen.builder,
-        signupScreen: SignupScreen.builder,
-        dashboardContainerScreen: DashboardContainerScreen.builder,
-        drListScreen: DrListScreen.builder,
-        drDetailsScreen: DrDetailsScreen.builder,
-        bookAnAppointmentScreen: BookAnAppointmentScreen.builder,
-        chatScreen: ChatScreen.builder,
-        pharmacyScreen: PharmacyScreen.builder,
-        drugDetailsScreen: DrugDetailsScreen.builder,
-        articleScreen: ArticleScreen.builder,
-        cartScreen: CartScreen.builder,
-        ambulanceScreen: AmbulanceScreen.builder,
-        appNavigationScreen: AppNavigationScreen.builder,
-        initialRoute: SplashScreen.builder
-      };
+    splashScreen: SplashScreen.builder,
+    loginScreen: LoginScreen.builder,
+    signupScreen: SignupScreen.builder,
+    dashboardContainerScreen: DashboardContainerScreen.builder,
+    drListScreen: DrListScreen.builder,
+    drugDetailsScreen: (context) {
+      final drugDetails = ModalRoute.of(context)?.settings.arguments as DrugDetailsModel?;
+      return DrugDetailsScreen(drugDetails: drugDetails ?? DrugDetailsModel(imagePath: '', drugName: '', drugQuantity: '', drugDescription: ''));
+    },
+
+    bookAnAppointmentScreen: BookAnAppointmentScreen.builder,
+    chatScreen: ChatScreen.builder,
+    pharmacyScreen: PharmacyScreen.builder,
+    articleScreen: ArticleScreen.builder,
+    cartScreen: CartScreen.builder,
+    ambulanceScreen: AmbulanceScreen.builder,
+    appNavigationScreen: AppNavigationScreen.builder,
+    initialRoute: SplashScreen.builder
+  };
 }
